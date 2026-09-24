@@ -11,6 +11,9 @@
     <meta name="apple-mobile-web-app-title" content="AFRICA-mall">
     <title>AFRICA-mall Stable</title>
     <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="preload" as="image" href="导航页.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- DSEG7 LED七段数字字体 -->
@@ -10775,6 +10778,65 @@ textarea:focus-visible {
             });
         }
         
+        // ===== PWA 安装到手机 =====
+        (function () {
+            var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+            if (isStandalone) return; // 已经以 App 方式打开，不再提示
+
+            var ua = navigator.userAgent;
+            var isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+            var deferredPrompt = null;
+
+            function dismissedRecently() {
+                try { return Date.now() - parseInt(localStorage.getItem('pwa-install-dismissed') || '0', 10) < 3 * 24 * 3600 * 1000; } catch (e) { return false; }
+            }
+
+            function showBanner(text, btnText, onClick) {
+                if (dismissedRecently() || document.getElementById('pwa-install-bar')) return;
+                var bar = document.createElement('div');
+                bar.id = 'pwa-install-bar';
+                bar.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom));width:calc(100% - 24px);max-width:576px;z-index:99999;background:#1E304C;color:#fff;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 6px 20px rgba(0,0,0,.3);font-size:.85rem;';
+                bar.innerHTML = '<img src="icon-192.png" alt="" style="width:36px;height:36px;border-radius:8px;flex:none">' +
+                    '<div style="flex:1;line-height:1.35">' + text + '</div>' +
+                    (btnText ? '<button id="pwa-install-btn" style="flex:none;background:#f5a623;color:#1E304C;border:none;border-radius:8px;padding:8px 12px;font-weight:700;font-size:.85rem;cursor:pointer">' + btnText + '</button>' : '') +
+                    '<button id="pwa-install-close" aria-label="关闭" style="flex:none;background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;padding:0 4px">×</button>';
+                document.body.appendChild(bar);
+                if (btnText) document.getElementById('pwa-install-btn').onclick = onClick;
+                document.getElementById('pwa-install-close').onclick = function () {
+                    try { localStorage.setItem('pwa-install-dismissed', String(Date.now())); } catch (e) {}
+                    bar.remove();
+                };
+            }
+
+            // Android / 电脑 Chrome、Edge、三星浏览器：一键安装
+            window.addEventListener('beforeinstallprompt', function (e) {
+                e.preventDefault();
+                deferredPrompt = e;
+                showBanner('<b>安装 AFRICA-mall 到手机</b><br>桌面图标一键打开，像 App 一样使用', '安装', function () {
+                    var bar = document.getElementById('pwa-install-bar');
+                    if (bar) bar.remove();
+                    if (!deferredPrompt) return;
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.finally(function () { deferredPrompt = null; });
+                });
+            });
+
+            window.addEventListener('appinstalled', function () {
+                var bar = document.getElementById('pwa-install-bar');
+                if (bar) bar.remove();
+                if (typeof msg === 'function') msg('安装成功，可以从桌面打开了');
+            });
+
+            // iPhone / iPad：Safari 不支持一键安装，给出操作提示
+            if (isIOS) {
+                window.addEventListener('load', function () {
+                    setTimeout(function () {
+                        showBanner('<b>安装到 iPhone</b><br>用 Safari 打开，点底部 <b>分享</b> 按钮 → <b>添加到主屏幕</b>', '', null);
+                    }, 1500);
+                });
+            }
+        })();
+
         // Hide splash screen after 1.3 seconds (1s display + 0.3s fade)
         window.addEventListener('load', function () {
             // Already handled by CSS animation

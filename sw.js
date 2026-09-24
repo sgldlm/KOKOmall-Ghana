@@ -1,112 +1,88 @@
-// Service Worker for AFRICA Mall PWA - Android APK Version
-const CACHE_VERSION = 'africa-mall-android-v39';
-const IMAGE_CACHE = 'koko-images-android-v1';
+// Service Worker for AFRICA-mall PWA
+// 更新网站后把版本号 +1，手机上的 App 会自动拿到新版本
+const CACHE_VERSION = 'africa-mall-pwa-v40';
+const IMAGE_CACHE = 'koko-images-v1';
 
-const urlsToCache = [
+// 只预缓存本站文件；第三方脚本（Google/Facebook/Flutterwave）一律走网络，不缓存
+const APP_SHELL = [
   './',
   './index.html',
+  './styles.css',
   './space-theme.css',
   './manifest.json',
   './icon-192.png',
-  './icon-512.png',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-  'https://cdn.jsdelivr.net/fontsource/fonts/dseg7-classic@latest/latin-400-normal.woff2',
-  'https://accounts.google.com/gsi/client',
-  'https://connect.facebook.net/en_US/sdk.js'
+  './icon-512.png'
 ];
 
-// Install event - cache resources
-self.addEventListener('install', function(event) {
+self.addEventListener('install', function (event) {
   event.waitUntil(
-    caches.open(CACHE_VERSION)
-      .then(function(cache) {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
-      .catch(function(error) {
-        console.log('Cache failed:', error);
-      })
+    caches.open(CACHE_VERSION).then(function (cache) {
+      // 逐个缓存，某个文件缺失不影响整体安装
+      return Promise.all(APP_SHELL.map(function (url) {
+        return cache.add(url).catch(function (err) {
+          console.log('跳过缓存:', url, err);
+        });
+      }));
+    })
   );
   self.skipWaiting();
 });
 
-// Activate event - clean up old caches
-self.addEventListener('activate', function(event) {
+self.addEventListener('activate', function (event) {
   event.waitUntil(
-    caches.keys().then(function(cacheNames) {
-      return Promise.all(
-        cacheNames.map(function(cacheName) {
-          if (cacheName !== CACHE_VERSION && cacheName !== IMAGE_CACHE) {
-            console.log('Deleting old cache:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
+    caches.keys().then(function (names) {
+      return Promise.all(names.map(function (name) {
+        if (name !== CACHE_VERSION && name !== IMAGE_CACHE) return caches.delete(name);
+      }));
     })
   );
   self.clients.claim();
 });
 
-// Fetch event - serve from cache, fallback to network
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', function (event) {
   const request = event.request;
-  const url = new URL(request.url);
+  if (request.method !== 'GET') return;
 
-  // 图片专用缓存策略：Cache First
-  if (url.pathname.includes('/images/') || 
-      url.pathname.includes('/product-images-')) {
-    event.respondWith(cacheImage(request));
+  const url = new URL(request.url);
+  // 第三方请求（登录、支付、CDN）不拦截
+  if (url.origin !== self.location.origin) return;
+
+  // 图片：缓存优先
+  if (request.destination === 'image' || url.pathname.includes('/product-images-') || url.pathname.includes('/hero-featured-images/')) {
+    event.respondWith(cacheFirst(request, IMAGE_CACHE));
     return;
   }
 
-  // 其他资源：Network First with Cache Fallback
-  event.respondWith(
-    caches.match(request)
-      .then(function(response) {
-        return response || fetch(request).then(function(response) {
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
-          }
-
-          const responseToCache = response.clone();
-          caches.open(CACHE_VERSION)
-            .then(function(cache) {
-              cache.put(request, responseToCache);
-            });
-
-          return response;
-        });
-      })
-      .catch(function(error) {
-        console.log('Fetch failed:', error);
-        return new Response('Offline', {
-          status: 503,
-          statusText: 'Service Unavailable'
-        });
-      })
-  );
+  // 页面和其他文件：网络优先，离线时用缓存
+  event.respondWith(networkFirst(request));
 });
 
-// 图片缓存专用函数：Cache First策略
-async function cacheImage(request) {
-  const cache = await caches.open(IMAGE_CACHE);
-  const cached = await cache.match(request);
-  
-  if (cached) {
-    return cached;
-  }
-
+async function networkFirst(request) {
+  const cache = await caches.open(CACHE_VERSION);
   try {
     const response = await fetch(request);
-    if (response && response.status === 200) {
-      cache.put(request, response.clone());
-    }
+    if (response && response.status === 200) cache.put(request, response.clone());
     return response;
-  } catch (error) {
-    console.log('Image fetch failed:', error);
-    return new Response('Image not available', {
-      status: 404,
-      statusText: 'Not Found'
-    });
+  } catch (err) {
+    const cached = await cache.match(request, { ignoreSearch: true });
+    if (cached) return cached;
+    if (request.mode === 'navigate') {
+      const shell = await cache.match('./index.html');
+      if (shell) return shell;
+    }
+    return new Response('Offline', { status: 503, statusText: 'Service Unavailable' });
+  }
+}
+
+async function cacheFirst(request, cacheName) {
+  const cache = await caches.open(cacheName);
+  const cached = await cache.match(request);
+  if (cached) return cached;
+  try {
+    const response = await fetch(request);
+    if (response && response.status === 200) cache.put(request, response.clone());
+    return response;
+  } catch (err) {
+    return new Response('', { status: 404, statusText: 'Not Found' });
   }
 }

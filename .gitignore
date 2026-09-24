@@ -8,3 +8,7 @@
 *.ico
 *.bmp
 .DS_Store
+
+# PWA icons are required for install
+!icon-192.png
+!icon-512.png
