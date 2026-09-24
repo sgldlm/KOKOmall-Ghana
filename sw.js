@@ -1,6 +1,6 @@
 // Service Worker for AFRICA-mall PWA
 // 更新网站后把版本号 +1，手机上的 App 会自动拿到新版本
-const CACHE_VERSION = 'africa-mall-pwa-v40';
+const CACHE_VERSION = 'africa-mall-pwa-v41';
 const IMAGE_CACHE = 'koko-images-v1';
 
 // 只预缓存本站文件；第三方脚本（Google/Facebook/Flutterwave）一律走网络，不缓存

@@ -5,6 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <script>
+        // 手机 Chrome 开了“桌面版网站”时会忽略 viewport，按 980px 宽排版，字会变得很小。
+        // 检测到这种情况时，整体缩放回手机真实宽度。
+        (function () {
+            function fit() {
+                var isPhone = navigator.maxTouchPoints > 0 && Math.min(screen.width, screen.height) <= 600;
+                var sw = screen.width, iw = window.innerWidth;
+                var z = (isPhone && sw > 0 && iw > sw * 1.3) ? iw / sw : 1;
+                window.__uiZoom = z;
+                document.documentElement.style.zoom = z === 1 ? '' : String(z);
+            }
+            // zoom 下 getBoundingClientRect 返回的是放大后的尺寸，写回 style 前要除掉
+            window.__unzoomRect = function (r) {
+                var z = window.__uiZoom || 1;
+                if (z === 1) return r;
+                return { left: r.left / z, top: r.top / z, right: r.right / z, bottom: r.bottom / z, width: r.width / z, height: r.height / z };
+            };
+            fit();
+            window.addEventListener('resize', fit);
+        })();
+    </script>
     <meta name="theme-color" content="#1E304C">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -6300,7 +6321,7 @@ textarea:focus-visible {
                 const actsContainer = document.querySelector('.lucky-area .acts');
                 const page = document.querySelector('.page.active');
                 if (actsContainer && page) {
-                    const pageRect = page.getBoundingClientRect();
+                    const pageRect = __unzoomRect(page.getBoundingClientRect());
                     const pageLeft = pageRect.left;
                     const pageWidth = Math.min(pageRect.width, 600);
                     actsContainer.style.left = pageLeft + 'px';
@@ -6315,7 +6336,7 @@ textarea:focus-visible {
                 const navBar = document.querySelector('.nav');
                 const page = document.querySelector('.page.active');
                 if (page) {
-                    const pageRect = page.getBoundingClientRect();
+                    const pageRect = __unzoomRect(page.getBoundingClientRect());
                     const pageLeft = pageRect.left;
                     const pageWidth = pageRect.width; // 使用页面实际宽度，不限制为600px
                     if (ptsFoot) {
@@ -6344,7 +6365,7 @@ textarea:focus-visible {
                     const gameCenterContainer = document.getElementById('game-center-container');
                     // 计算 pts-head 的实际高度（包括 margin）
                     const updateStickyPositions = () => {
-                        const ptsHeadRect = ptsHead.getBoundingClientRect();
+                        const ptsHeadRect = __unzoomRect(ptsHead.getBoundingClientRect());
                         const ptsHeadHeight = ptsHeadRect.height;
                         const ptsHeadMarginTop = parseInt(getComputedStyle(ptsHead).marginTop) || 2;
                         const ptsHeadMarginBottom = parseInt(getComputedStyle(ptsHead).marginBottom) || -5;
@@ -10735,7 +10756,7 @@ textarea:focus-visible {
             var actsContainer = document.querySelector('.lucky-area .acts');
             var page = document.querySelector('.page.active');
             if (!actsContainer || !page) return;
-            var pageRect = page.getBoundingClientRect();
+            var pageRect = __unzoomRect(page.getBoundingClientRect());
             actsContainer.style.left = pageRect.left + 'px';
             actsContainer.style.width = Math.min(pageRect.width, 600) + 'px';
             actsContainer.style.right = 'auto';
@@ -10747,7 +10768,7 @@ textarea:focus-visible {
             var navBar = document.querySelector('.nav');
             var page = document.querySelector('.page.active');
             if (!page) return;
-            var pageRect = page.getBoundingClientRect();
+            var pageRect = __unzoomRect(page.getBoundingClientRect());
             if (ptsFoot) {
                 ptsFoot.style.left = pageRect.left + 'px';
                 ptsFoot.style.width = pageRect.width + 'px';
@@ -10861,7 +10882,7 @@ textarea:focus-visible {
                         var navBar = document.querySelector('.nav');
                         var page = document.querySelector('.page.active');
                         if (page) {
-                            var pageRect = page.getBoundingClientRect();
+                            var pageRect = __unzoomRect(page.getBoundingClientRect());
                             var pageLeft = pageRect.left;
                             var pageWidth = pageRect.width;
                             if (actsContainer) {
