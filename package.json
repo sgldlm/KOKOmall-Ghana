@@ -1,0 +1,13 @@
+{
+  "name": "koko-mall-pwa",
+  "version": "1.0.0",
+  "description": "KOKO Mall Progressive Web App",
+  "scripts": {
+    "create-icons": "node create-icons-node.js",
+    "serve": "python3 -m http.server 8000",
+    "serve-node": "npx http-server -p 8000"
+  },
+  "keywords": ["pwa", "shopping", "koko"],
+  "author": "",
+  "license": "ISC"
+}

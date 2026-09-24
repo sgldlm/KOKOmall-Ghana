@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Icons</title>
+</head>
+<body>
+    <h1>Icon Generator</h1>
+    <canvas id="icon192" width="192" height="192"></canvas>
+    <canvas id="icon512" width="512" height="512"></canvas>
+    <script>
+        function generateIcon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // 设置背景色为橙色
+            ctx.fillStyle = '#FFA500';
+            ctx.fillRect(0, 0, size, size);
+            
+            // 绘制AFRICA文字
+            ctx.fillStyle = '#1C1C1C';
+            ctx.font = `bold ${size * 0.4}px Arial Black`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('AFRICA', size / 2, size / 2);
+            
+            // 下载图标
+            canvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `icon-${size}.png`;
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+        }
+        
+        // 页面加载后生成图标
+        window.onload = function() {
+            setTimeout(() => {
+                generateIcon('icon192', 192);
+                setTimeout(() => {
+                    generateIcon('icon512', 512);
+                }, 500);
+            }, 500);
+        };
+    </script>
+</body>
+</html>

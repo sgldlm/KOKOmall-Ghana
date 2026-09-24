@@ -1,0 +1,466 @@
+/* Deep space theme inspired by the supplied reference image. */
+:root {
+    --primary: #43E0BC;
+    --accent: #43E0BC;
+    --gold: #43E0BC;
+    --bg: #1E304C;
+    --text-main: #F4FAFC;
+    --text-gray: #9FB2C4;
+    --hero-bg: #F4F8FA;
+    --card-bg: #F4F8FA;
+    --nav-bg: #182A43;
+    --green: #43E0BC;
+    --item-bg: #F4F8FA;
+    --modal: #F4F8FA;
+    --space-deep: #1E304C;
+    --space-deeper: #182A43;
+    --space-ink: #17263D;
+    --space-white: #F4F8FA;
+    --space-soft: #E5EEF2;
+    --space-mint: #43E0BC;
+    --space-teal: #165B64;
+    --space-muted: #73899B;
+    --space-line: rgba(110, 150, 164, 0.30);
+    --border-subtle: rgba(110, 150, 164, 0.22);
+    --border-medium: rgba(110, 150, 164, 0.38);
+}
+
+html,
+html body,
+html body .page-container,
+html body .page,
+html body #page-home,
+html body #page-shop,
+html body #page-lucky,
+html body #page-points,
+html body #page-profile,
+html body .register-container,
+html body .profile-fixed-header {
+    background: var(--space-deep) !important;
+    color: var(--space-white) !important;
+}
+
+html body {
+    font-family: Arial, "Microsoft YaHei", sans-serif !important;
+}
+
+html body #splash-screen {
+    background: var(--space-deep) !important;
+}
+
+html body .header {
+    background: var(--space-deeper) !important;
+    color: var(--space-white) !important;
+    border-bottom: 1px solid rgba(67, 224, 188, 0.38) !important;
+    border-radius: 0 !important;
+}
+
+html body .logo,
+html body .logo span,
+html body .header .logo,
+html body .header .logo span,
+html body .badge,
+html body .badge *,
+html body .badge-label,
+html body .v-bal,
+html body .v-pts,
+html body .register-security,
+html body .register-footer a {
+    color: var(--space-white) !important;
+}
+
+html body .badge i,
+html body .header .badge i,
+html body .badges .badge i,
+html body .location-info i,
+html body .register-security i {
+    color: var(--space-mint) !important;
+}
+
+html body .hero,
+html body .home-card,
+html body .shop-item,
+html body .lucky-top-item,
+html body .pt-item,
+html body .sec,
+html body .m-box,
+html body .win-notice-modal-item,
+html body .recharge-box,
+html body .rec-item {
+    background: var(--space-white) !important;
+    color: var(--space-ink) !important;
+    border: 1px solid var(--space-line) !important;
+    border-radius: 18px !important;
+}
+
+html body .hero {
+    overflow: visible !important;
+}
+
+html body .hero-white-bar,
+html body .hero-green-bar,
+html body .hero-black-bar-on-white {
+    background: var(--space-white) !important;
+    color: var(--space-ink) !important;
+}
+
+html body .hero-tag,
+html body .sec-h,
+html body .rec-r,
+html body .register-header h1,
+html body .register-footer a {
+    color: var(--space-teal) !important;
+}
+
+html body #page-home .hero .hero-green-bar {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    color: #FFFFFF !important;
+}
+
+html body .hero-orange-block-item {
+    border-color: var(--space-deep) !important;
+    border-radius: 18px !important;
+}
+html body .hero-orange-block-item:nth-child(4n+1) { background: var(--space-mint) !important; }
+html body .hero-orange-block-item:nth-child(4n+2) { background: var(--space-teal) !important; }
+html body .hero-orange-block-item:nth-child(4n+3) { background: var(--space-soft) !important; }
+html body .hero-orange-block-item:nth-child(4n+4) { background: #2D7180 !important; }
+
+html body .card-img,
+html body .shop-img-placeholder,
+html body .product-image-box,
+html body .pt-img {
+    background: var(--space-soft) !important;
+    border-color: var(--space-line) !important;
+    border-radius: 14px !important;
+}
+
+html body .product-image-label,
+html body .card-title,
+html body .card-sub,
+html body .card-desc,
+html body .shop-info,
+html body .shop-info *,
+html body .item-brand-name,
+html body .item-desc,
+html body .pt-name,
+html body .pt-val,
+html body .pt-val *,
+html body .profile-info,
+html body .stat,
+html body .sec,
+html body .sec *,
+html body #draw-status-text,
+html body #d-status,
+html body #det-win-msg {
+    color: var(--space-ink) !important;
+}
+
+html body .item-rating-stars,
+html body .item-rating {
+    color: #0A6F66 !important;
+}
+
+html body #page-lucky .lucky-empty-hint {
+    color: #526A7A !important;
+}
+
+html body .fb-price,
+html body .btn-out,
+html body .rec-btn,
+html body .pay-opt {
+    background: var(--space-soft) !important;
+    color: var(--space-ink) !important;
+    border-color: var(--space-line) !important;
+    border-radius: 12px !important;
+}
+
+html body .fb-koko,
+html body .search-btn,
+html body .btn-grad,
+html body #btn-pay,
+html body .rech-confirm {
+    background: var(--space-mint) !important;
+    color: var(--space-ink) !important;
+    border-color: var(--space-mint) !important;
+    border-radius: 12px !important;
+}
+
+html body .shop-top,
+html body .shop-search,
+html body .lucky-area .acts,
+html body #game-center-container {
+    background: var(--space-deep) !important;
+    color: var(--space-white) !important;
+    border-color: rgba(67, 224, 188, 0.24) !important;
+}
+
+html body .shop-search {
+    background: var(--space-white) !important;
+    border-radius: 18px !important;
+}
+
+html body .shop-search input,
+html body .shop-search .search-input-wrap {
+    background: transparent !important;
+    color: var(--space-ink) !important;
+}
+
+html body .shop-search input::placeholder {
+    color: var(--space-muted) !important;
+}
+
+html body .location-info,
+html body .shop-slogan-container,
+html body .game-bar,
+html body .game-bar *,
+html body .win-notice-item {
+    color: var(--space-white) !important;
+}
+
+html body .cat-btn,
+html body .cat-dropdown-btn,
+html body .gs-btn {
+    background: var(--space-white) !important;
+    color: var(--space-ink) !important;
+    border-color: var(--space-line) !important;
+    border-radius: 12px !important;
+}
+
+html body .cat-btn.active,
+html body .cat-dropdown-btn.active,
+html body .cat-expand-btn,
+html body .gs-btn.active {
+    background: var(--space-mint) !important;
+    color: var(--space-ink) !important;
+    border-color: var(--space-mint) !important;
+}
+
+html body .cat-expand-btn i {
+    color: var(--space-ink) !important;
+}
+
+html body .game-grid .cell {
+    background: var(--space-teal) !important;
+    color: var(--space-white) !important;
+    border-color: var(--space-deep) !important;
+    border-radius: 6px !important;
+}
+
+html body .game-grid .cell.sel,
+html body .game-grid .cell.locked {
+    background: var(--space-muted) !important;
+    color: var(--space-white) !important;
+}
+
+html body .pts-head,
+html body .stat {
+    background: var(--space-mint) !important;
+    color: var(--space-ink) !important;
+    border-radius: 16px !important;
+}
+
+/* Dark text on mint and white surfaces highlighted in the review screenshots. */
+html body #page-profile .stat .stat-num,
+html body #page-profile .stat .stat-num.v-bal,
+html body #page-profile .stat .stat-num.v-pts,
+html body #page-points .pts-head .v-pts,
+html body #page-points .pts-head .stat-num,
+html body #page-shop .shop-search .location-info,
+html body #page-shop .shop-search .location-info span,
+html body #page-shop .shop-search #location-text {
+    color: #000000 !important;
+}
+
+html body #game-center-container > div:first-child,
+html body #game-center-container > div:first-child * {
+    color: var(--space-mint) !important;
+}
+
+html body #game-buttons-sticky > div > div {
+    background: var(--space-white) !important;
+    color: var(--space-ink) !important;
+    border-color: var(--space-line) !important;
+    border-radius: 12px !important;
+}
+
+html body #game-buttons-sticky > div > div:nth-child(1),
+html body #game-buttons-sticky > div > div:nth-child(2) {
+    background: var(--space-mint) !important;
+}
+
+html body #game-buttons-sticky > div > div:nth-child(3) {
+    background: #74879B !important;
+    color: var(--space-white) !important;
+}
+
+html body .pts-foot {
+    background: var(--space-deeper) !important;
+    border-top: 1px solid rgba(67, 224, 188, 0.38) !important;
+}
+
+html body .pts-foot > *:first-child {
+    background: var(--space-white) !important;
+    color: var(--space-ink) !important;
+}
+
+html body .pts-foot > *:last-child {
+    background: var(--space-mint) !important;
+    color: var(--space-ink) !important;
+}
+
+html body .nav {
+    background: var(--space-deeper) !important;
+    border-top: 1px solid rgba(67, 224, 188, 0.38) !important;
+    border-radius: 18px 18px 0 0 !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+html body .nav-l {
+    color: var(--space-muted) !important;
+}
+
+html body .nav-l.active,
+html body .nav-l.active i,
+html body .nav-l.active span,
+html body .nav-l.active b {
+    color: var(--space-mint) !important;
+}
+
+html body .modal {
+    background: rgba(16, 31, 51, 0.84) !important;
+}
+
+html body .m-box,
+html body .m-box h3,
+html body .m-box h4,
+html body .m-box p,
+html body .m-box label,
+html body .m-box span {
+    color: var(--space-ink) !important;
+}
+
+html body input,
+html body textarea,
+html body .search-input-wrap,
+html body .rech-inp-s {
+    background: var(--space-soft) !important;
+    color: var(--space-ink) !important;
+    border-color: var(--space-line) !important;
+    border-radius: 12px !important;
+}
+
+html body input::placeholder,
+html body textarea::placeholder {
+    color: var(--space-muted) !important;
+}
+
+html body .btn-google,
+html body .btn-facebook,
+html body .btn-email,
+html body .btn-phone {
+    background: var(--space-white) !important;
+    color: var(--space-ink) !important;
+    border: 1px solid var(--space-line) !important;
+    border-radius: 16px !important;
+}
+
+html body .btn-google,
+html body .btn-facebook {
+    background: var(--space-mint) !important;
+}
+
+html body .profile-actions {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+html body .profile-logout {
+    background: transparent !important;
+    color: var(--space-mint) !important;
+    border-color: var(--space-mint) !important;
+    border-radius: 12px !important;
+}
+
+html body .empty-msg,
+html body .register-footer,
+html body .register-terms,
+html body .register-terms a {
+    color: var(--space-muted) !important;
+}
+
+html body .toast {
+    background: var(--space-mint) !important;
+    color: var(--space-ink) !important;
+    border-radius: 999px !important;
+}
+
+html body .fav-item {
+    background: var(--space-soft) !important;
+    color: var(--space-ink) !important;
+    border-color: var(--space-line) !important;
+    border-radius: 14px !important;
+}
+
+html body .fav-item.sel,
+html body .fav-check:checked {
+    border-color: var(--space-mint) !important;
+}
+
+html body #draw-number-display {
+    background: var(--space-deeper) !important;
+    border-color: var(--space-mint) !important;
+}
+
+html body #draw-number,
+html body #d-result,
+html body #d-savings {
+    color: var(--space-mint) !important;
+}
+
+html body *:not(#space-theme-shadow-override),
+html body *:not(#space-theme-shadow-override)::before,
+html body *:not(#space-theme-shadow-override)::after {
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+html body .nav-l:focus-visible,
+html body .search-btn:focus-visible,
+html body .location-info:focus-visible,
+html body .cat-btn:focus-visible,
+html body .cat-expand-btn:focus-visible,
+html body .gs-btn:focus-visible,
+html body .stat:focus-visible,
+html body .sec-h[onclick]:focus-visible,
+html body .f-btn:focus-visible,
+html body .btn-big:focus-visible,
+html body .profile-logout:focus-visible,
+html body input:focus-visible,
+html body textarea:focus-visible {
+    outline: 3px solid rgba(67, 224, 188, 0.90) !important;
+    outline-offset: 2px !important;
+}
+
+@media (max-width: 520px) {
+    html body .hero,
+    html body .hero-orange-block-item,
+    html body .home-card,
+    html body .shop-item,
+    html body .lucky-top-item,
+    html body .pt-item,
+    html body .sec,
+    html body .m-box {
+        border-radius: 14px !important;
+    }
+
+    html body .shop-search,
+    html body .btn-login,
+    html body .cat-btn,
+    html body .gs-btn {
+        border-radius: 10px !important;
+    }
+}

@@ -1,0 +1,10 @@
+# ?????
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.svg
+*.ico
+*.bmp
+.DS_Store
