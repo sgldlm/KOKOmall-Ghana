@@ -464,3 +464,32 @@ html body textarea:focus-visible {
         border-radius: 10px !important;
     }
 }
+
+/* 首页：“AFRICA-mall商城强力推荐”标题 + 4 个色块固定不动，产品从它们下方滚过 */
+html body #page-home .hero .hero-green-bar {
+    background: var(--bg) !important;
+    background-color: var(--bg) !important;
+}
+html body #page-home .hero-orange-blocks {
+    position: sticky;
+    top: 278px; /* 70px(banner 固定位置) + 160px(banner 高) + 48px(标题栏高) */
+    z-index: 71;
+    background: var(--bg);
+    height: auto !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 12px !important; /* 用 padding 代替 margin，让下方间隙也能遮住产品 */
+}
+@media (max-width: 480px) {
+    html body #page-home .hero-orange-blocks {
+        top: 225px; /* 手机：顶栏 57px + banner 120px + 48px */
+    }
+}/* 顶栏和 banner 之间的缝隙也遮住，避免产品从这里露出来 */
+html body #page-home .hero::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -16px;
+    height: 16px;
+    background: var(--bg);
+}
